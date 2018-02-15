@@ -8,7 +8,7 @@ To go deeper on different gateway scenarios, please visit the [official document
 
 Here you can find some guidelines to deploy Azure IoT Edge on an Azure VM acting as transparent gateway and create a simple console application sending data to IoT Hub thru this gateway. 
 
-## Create and configure an Azure VM to be used as IoT Edge device##
+## Create and configure an Azure VM to be used as IoT Edge device ##
 
 First of all, we need to [create a VM on Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal). For the purpose of this sample, I created a simple Linux B1ms and choose *Password* instead of *SSH* as authentication type. following the linked tutorial, you will also see how to connect to the VM and how to create a new inbound security rule.  
 We actually need to add an inbound security rule in the Network Security Group to allow traffic on ports 8883 and 443, used by Azure IoT Edge. 
@@ -135,7 +135,7 @@ And finally we can check if it actually works as transparent gateway, monitoring
 
 ![](img/iothubexplorer.JPG)
 
-And that's it, our transparent gateway is up and running!
+And that's it, our transparent gateway is finally up and running! :)
  
     
  
