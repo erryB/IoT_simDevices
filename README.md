@@ -10,7 +10,7 @@ Here's what you can find in this repo:
 
 **Joker** is a C# console application that first of all reads the device twin from IoT Hub, and updates one of the properties. After that, it just sends messages with temperature and a boolean to indicate if the monitored door is open.
 
-**Robin** is a C# console application that sends temperature to IoT Hub passing thru an IoT Edge device used as transparent gateway. You can find more details in *Robin/TransparentGW README.md* file.
+**Robin** is a C# console application that sends temperature to IoT Hub passing thru an IoT Edge device used as transparent gateway. You can find more details in *Robin/README.md* file.
 
 In the **Helper** folder:
 - *CreateDeviceIdentity* is a C# console application you can use to register your device to your IoT Hub
