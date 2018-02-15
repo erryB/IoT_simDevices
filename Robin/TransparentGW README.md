@@ -20,7 +20,7 @@ Then, to connect to the VM I used the [Windows Subsystem for Linux](https://docs
 
 We can also change the DNS name, just slicking on it. We'll use it later to setup Azure IoT Edge.
 
-![](img/dns.JPG?raw=true)
+![](/../img/img/dns.JPG?raw=true)
 
 ## Deploy Azure IoT Edge on the Linux VM with empty configuration ##
 
@@ -37,7 +37,7 @@ Now IoT Edge is up and running on your VM and we can check the modules that are 
 
     sudo docker ps
 
-![](img/dockerps2.JPG?raw=true)
+![](/../img/img/dockerps2.JPG?raw=true)
 
 We can see that only the *edgeAgent* is running, because at the moment there is no module on IoT Edge, so not even the *edgeHub* has been started. But to use it as a transparent gateway, we actually need to start the *edgeHub* even if we don't create new modules. 
 
@@ -48,17 +48,17 @@ If we go to your Azure portal and select our IoT Edge device, we can see this me
 To set the configuration and start the *edgeHub*, we need to create an empty configuration. Click on *Set Modules* > *Next* > *Next* > *Submit*. 
 
 
-![](img/emptyConfig.JPG?raw=true)
+![](/../img/img/emptyConfig.JPG?raw=true)
 
 Now we can see both *edgeAgent* and *edgeHub* in the list of deployed modules.
 
-![](img/edgeHub.JPG?raw=true)
+![](/../img/img/edgeHub.JPG?raw=true)
 
 And we can see the same also in our VM, running
 
     sudo docker ps
 
-![](img/dockerps3.JPG?raw=true)
+![](/../img/img/dockerps3.JPG?raw=true)
 
 Now we have Azure IoT Edge up and running on our VM, but it is not working as a transparent gateway yet. We need to add a leaf device and setup the connetion between it and IoT Hub thru our transparent gateway. 
 
@@ -83,7 +83,7 @@ Then we need to restart our IoT Edge
 
 First of all, we need to add a leaf device to our Azure IoT Hub. We can easily do it selecting our IoT Hub in the Azure portal and clicking on *IoT Devices* > *Add*. We can choose our Device ID, and we need to save both the Device ID and the connection string because we'll use them later in the device application.
 
-![](img/iotdevice1.JPG?raw=true)
+![](/../img/img/iotdevice1.JPG?raw=true)
 *Please notice that in my screenshot there are already 3 devices register in my IoT Hub. If you created your IoT Hub just for this application you will have only 1 device (+ 1 Edge device) at the end of this deployment.*
 
 Now it's time to talk about the leaf device application. We can use any kind of application to send data to IoT Hub thru IoT Edge, in this case we have a simple C# Console Application sending random temperatures every second.
@@ -121,20 +121,20 @@ Now, we can run our console application. It will send data to our Azure IoT Edge
 
  
 Here we can see our console applicaton sending messages
-![](img/robinmsg.JPG?raw=true)
+![](/../img/img/robinmsg.JPG?raw=true)
 
 We can also verify what's appening in our IoT Edge device, running this command
 
     sudo docker logs -f edgeHub
 
-![](img/dockerlogs1.JPG?raw=true)
+![](/../img/img/dockerlogs1.JPG?raw=true)
 
 And finally we can check if it actually works as transparent gateway, monitoring the messages received by IoT Hub. To do that we can install [iothubexplorer](https://github.com/azure/iothub-explorer), open a powershell window and run the following command:
 
 
     iothub-explorer.cmd monitor-events <your-leaf-device-id> --login "your-iot-hub-connection-string"
 
-![](img/iothubexplorer.JPG?raw=true)
+![](/../img/img/iothubexplorer.JPG?raw=true)
 
 And that's it, our transparent gateway is finally up and running! :)
  
