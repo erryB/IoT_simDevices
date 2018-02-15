@@ -14,7 +14,7 @@ Of course you can also deploy IoT Edge on a physical device, in that case you ca
 First of all, we need to [create a VM on Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal). For the purpose of this sample, I created a simple Linux B1ms and choose *Password* instead of *SSH* as authentication type. following the linked tutorial, you will also see how to connect to the VM and how to create a new inbound security rule.  
 We actually need to add an inbound security rule in the Network Security Group to allow traffic on ports 8883 and 443, used by Azure IoT Edge. 
 
-![](/../img/img/edgePorts2.JPG?raw=true)
+![](/../img/Robin/img/edgePorts2.JPG?raw=true)
  
 Then, to connect to the VM I used the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about). It will be asked you if you are sure to continue with the authentication and then you need to insert the password you choose when you created your VM. 
 
