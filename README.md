@@ -12,6 +12,8 @@ Here's what you can find in this repo:
 
 **Robin** is a C# console application that sends temperature to IoT Hub passing thru an IoT Edge device used as transparent gateway. You can find more details in *Robin/README.md* file.
 
-In the **Helper** folder:
-- *CreateDeviceIdentity* is a C# console application you can use to register your device to your IoT Hub
-- *AddTagsAndQuery* is a C# console application that shows you how to add tags to a device twin and how to create querys to retrieve information.
+
+**CreateDeviceIdentity** is a C# console application you can use to register your device to your IoT Hub
+
+
+**AddTagsAndQuery** is a C# console application that shows you how to add tags to a device twin and how to create querys to retrieve information.
