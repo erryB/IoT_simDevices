@@ -21,7 +21,6 @@ namespace Robin
             InitCert();
             Console.WriteLine("Certificate ok");
 
-            //deviceClient = DeviceClient.CreateFromConnectionString(ConfigurationManager.AppSettings["connStringIOTHUB"]);
             deviceClient = DeviceClient.CreateFromConnectionString(ConfigurationManager.AppSettings["connStringTGWVM"], TransportType.Mqtt);
 
             Console.WriteLine("Connection established");
