@@ -2,11 +2,12 @@
 
 Thanks to [Azure IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/) it's possible to move analytics and custom business logics on the edge, closer to the devices, and send to the cloud only the filtered, manipulated, anonymized data. 
 
-It's possible to connect leaf devices to Azure IoT Edge and connect it to Azure IoT Hub, for instance if the devices are not able to use MQTT, AMQP, HTTP so can't connect to IoT Hub direclty. 
-But it's also possibile to use Azure IoT Edge as a Transparent Gateway: each leaf device has its own identity on IoT Hub, and also the Edge device has its own one, but messages pass thru IoT Edge. 
-To go deeper on different gateway scenarios, please visit the [official documentation](https://docs.microsoft.com/en-us/azure/iot-edge/iot-edge-as-gateway). 
+We can connect leaf devices to Azure IoT Edge and connect it to Azure IoT Hub, for instance if the devices are not able to use MQTT, AMQP, HTTP so can't connect to IoT Hub direclty. 
+But it's also possibile to use Azure IoT Edge as a Transparent Gateway: the Edge device has his own identity on IoT Hub, as well as each leaf device, but messages coming from the sensors pass thru IoT Edge before reaching the cloud. 
+To go deeper on the different gateway scenarios, please visit the [official documentation](https://docs.microsoft.com/en-us/azure/iot-edge/iot-edge-as-gateway). 
 
 Here you can find some guidelines to deploy Azure IoT Edge on an Azure VM acting as transparent gateway and create a simple console application sending data to IoT Hub thru this gateway. 
+Of course you can also deploy IoT Edge on a physical device, in that case you can skip the following step. 
 
 ## Create and configure an Azure VM to be used as IoT Edge device ##
 
@@ -23,33 +24,33 @@ We can also change the DNS name, just slicking on it. We'll use it later to setu
 
 ## Deploy Azure IoT Edge on the Linux VM with empty configuration ##
 
-This VM will be our Transparent Gateway, but we need to install Python and Docker in our brand new VM, in order to be able to deploy Azure IoT Edge. We just need to follow *the first steps* of the [official documentation to deploy IoT Edge on a Linux machine](https://docs.microsoft.com/en-us/azure/iot-edge/quickstart-linux). Here you can find how to:
+This VM will be our Transparent Gateway, but we need to install Python and Docker, in order to be able to deploy Azure IoT Edge. We just need to follow *the first steps* of the [official documentation to deploy IoT Edge on a Linux machine](https://docs.microsoft.com/en-us/azure/iot-edge/quickstart-linux). Here you can find how to:
 
 - Install Python and Docker CE
 - Create an IoT Hub in your Azure subscription using Azure CLI
 - Register an IoT Edge device to your Azure IoT Hub
 - Install and start the IoT Edge runtime on your Linux VM
 
-Be careful: we don't need to deploy a sample module on IoT Edge, because we actually want to use it as a transparent gateway!
-Now IoT Edge is up and running on your VM and you can check the modules that are actually running with
+**Note**: we don't need to deploy a sample module on IoT Edge, because we actually want to use it as a transparent gateway!
+
+Now IoT Edge is up and running on your VM and we can check the modules that are actually running with
 
     sudo docker ps
 
 ![](img/dockerps2.JPG)
 
-You will see only the edgeAgent running, because at the moment there is no module on IoT Edge, so not even the edgeHub has been started. 
-But to use it as a transparent gateway, we actually need to start the edgeHub even if we don't create new modules. 
+We can see that only the *edgeAgent* is running, because at the moment there is no module on IoT Edge, so not even the *edgeHub* has been started. But to use it as a transparent gateway, we actually need to start the *edgeHub* even if we don't create new modules. 
 
-If you go to your Azure portal and select your IoT Edge device. You will this message in the Edge Runtime Response:
+If we go to your Azure portal and select our IoT Edge device, we can see this message in the Edge Runtime Response:
 
     `417 - The device's deployment configuration is not set`
 
-To set the configuration and start the edgeHub, we need to create an empty configuration. Click on Set Modules > Next > Next > Submit. 
+To set the configuration and start the *edgeHub*, we need to create an empty configuration. Click on *Set Modules* > *Next* > *Next* > *Submit*. 
 
 
 ![](img/emptyConfig.JPG)
 
-Now we can see both edgeAgent and edgeHub in the list of deployed modules.
+Now we can see both *edgeAgent* and *edgeHub* in the list of deployed modules.
 
 ![](img/edgeHub.JPG)
 
@@ -63,7 +64,7 @@ Now we have Azure IoT Edge up and running on our VM, but it is not working as a 
 
 ## Configure the IoT Edge device as Transparent Gateway ##
   
-Now we can take a look at the [documentation to create a transparent gateway](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-create-transparent-gateway) and we can see there are 3 main sections to be followed, we'll focus on the first 2 for now.
+Now we can take a look at the [documentation to create a transparent gateway](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-create-transparent-gateway) and we can see that there are 3 main sections to be followed, we'll focus on the first 2 for now.
 
 First of all, we must [generate the the X.509 certificates](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-create-transparent-gateway#create-the-certificates-for-test-scenarios) for the communication between the Edge and the leaf device. Personally, I followed the procedure to create them using Powershell and I generated all the certificates in my localhost. Then I copied them in the Linux VM using [WinSCP](https://winscp.net/eng/index.php). 
 
@@ -80,7 +81,7 @@ Then we need to restart our IoT Edge
 
 ## Configure the leaf device ##
 
-First of all, we need to add a leaf device to our Azure IoT Hub. We can easily do it selecting our IoT Hub in the Azure portal and clicking on IoT Devices > Add. We can choose our Device ID, but we need to save both the Device ID and the connection string because we'll use them later in the device application.
+First of all, we need to add a leaf device to our Azure IoT Hub. We can easily do it selecting our IoT Hub in the Azure portal and clicking on *IoT Devices* > *Add*. We can choose our Device ID, and we need to save both the Device ID and the connection string because we'll use them later in the device application.
 
 ![](img/iotdevice1.JPG)
 *Please notice that in my screenshot there are already 3 devices register in my IoT Hub. If you created your IoT Hub just for this application you will have only 1 device (+ 1 Edge device) at the end of this deployment.*
@@ -122,7 +123,7 @@ Now, we can run our console application. It will send data to our Azure IoT Edge
 Here we can see our console applicaton sending messages
 ![](img/robinmsg.JPG)
 
-We can also verify what's appening in our IoT Edge device running
+We can also verify what's appening in our IoT Edge device, running this command
 
     sudo docker logs -f edgeHub
 
