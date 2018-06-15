@@ -12,6 +12,7 @@ Here's what you can find in this repo:
 
 **Robin** is a C# console application that sends temperature to IoT Hub passing thru an IoT Edge device used as transparent gateway. You can find more details in *Robin/README.md* file.
 
+**Alfred** is a C# console application which uses a X.509 certificate to connect to Azure Device Provisioning Service. Then the DPS assigns the appropriate IoT Hub to Alfred and it can start sending simple messages - random temperature and humidity. You can find more information in *Alfred/README.md* file
 
 **CreateDeviceIdentity** is a C# console application you can use to register your device to your IoT Hub
 
